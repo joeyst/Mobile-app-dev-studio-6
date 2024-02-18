@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import './weather_grid.dart';
+import './location_widget.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -60,7 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
     "windDirection": "SE",
     "isDaytime": "true",
     "probabilityOfPercipitation": "100"
-
   };
 
   Map<String, String> location = {
@@ -77,6 +76,13 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Text(location["city"]!);
+    WeatherGrid weatherGrid = WeatherGrid([forecast]);
+    BoxDecoration boxDecoration = BoxDecoration(border: Border.all(color: Colors.blueAccent));
+    // FractionallySizedBox fractionallySizedBox = FractionallySizedBox(widthFactor: 0.5, heightFactor: 0.5, child: weatherGrid);
+    LocationWidget locationWidget = LocationWidget(location);
+    List<Widget> widgets = [Flexible(child: locationWidget), Flexible(child: weatherGrid)];
+    Column child = Column(children: widgets);
+    // Widget child = weatherGrid;
+    return Container(decoration: boxDecoration, child: child);
   }
 }
